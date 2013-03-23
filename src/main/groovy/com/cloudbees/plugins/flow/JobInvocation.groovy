@@ -65,11 +65,13 @@ public class JobInvocation {
     /* package */ JobInvocation run(Cause cause, List<Action> actions) {
         future = project.scheduleBuild2(project.getQuietPeriod(), cause, actions);
         if (future == null) {
-            throw new CouldNotScheduleJobException("Could not schedule job "
-                    + project.getName() +", ensure its not already enqueued with same parameters", e);
+            throw new CouldNotScheduleJobException("Could not schedule job "                   
+				+ project.getName() +", ensure its not already enqueued with same parameters", 
+					new JobExecutionFailureException());
         }
         return this;
     }
+
 
     /**
      * Delegate method calls we don't implement to the actual {@link Run} so that DSL feels like a Run object has been
